@@ -4,7 +4,6 @@ Redis HA
 Example redis configuration with HA.
 
 ```
-$ chown 100:101 *.cfg
+$ sudo chown 100:101 master.cfg sentinel.cfg slave.cfg
 $ docker-compose up
-$ docker-compose scale sentinel=3
 ```
