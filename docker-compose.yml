@@ -12,20 +12,20 @@ services:
   master:
     image: redis:4-alpine
     volumes:
-      - ./master.cfg:/usr/local/etc/redis/redis.cfg
-    command: redis-server /usr/local/etc/redis/redis.cfg
+      - ./master.cfg:/redis.cfg
+    command: redis-server /redis.cfg
 
   slave:
     image: redis:4-alpine
     volumes:
-      - ./slave.cfg:/usr/local/etc/redis/redis.cfg
-    command: redis-server /usr/local/etc/redis/redis.cfg
+      - ./slave.cfg:/redis.cfg
+    command: redis-server /redis.cfg
 
   sentinel:
     image: redis:4-alpine
     volumes:
-      - ./sentinel.cfg:/usr/local/etc/redis/redis.cfg
-    command: redis-server /usr/local/etc/redis/redis.cfg --sentinel
+      - ./sentinel.cfg:/redis.cfg
+    command: redis-server /redis.cfg --sentinel
 
   app:
     build: ./app
