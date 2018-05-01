@@ -1,0 +1,33 @@
+version: '2'
+services:
+  haproxy:
+    image: haproxy:1.8-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+      - "1936:1936"
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+
+  master:
+    image: redis:4-alpine
+    volumes:
+      - ./master.cfg:/usr/local/etc/redis/redis.cfg
+    command: redis-server /usr/local/etc/redis/redis.cfg
+
+  slave:
+    image: redis:4-alpine
+    volumes:
+      - ./slave.cfg:/usr/local/etc/redis/redis.cfg
+    command: redis-server /usr/local/etc/redis/redis.cfg
+
+  sentinel:
+    image: redis:4-alpine
+    volumes:
+      - ./sentinel.cfg:/usr/local/etc/redis/redis.cfg
+    command: redis-server /usr/local/etc/redis/redis.cfg --sentinel
+
+  app:
+    build: ./app
+    image: app
+    restart: always
